@@ -19,7 +19,7 @@ public class FragmentAdapter extends FragmentStateAdapter {
             case 0:
                 return new PageFragment("index.json");
             case 1:
-                return new PageFragment("comming.json");
+                return new PageFragment("coming.json");
         }
         return new PageFragment("index.json");
     }

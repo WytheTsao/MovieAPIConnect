@@ -56,22 +56,5 @@ public class MainActivity extends AppCompatActivity {
                 tabLayout.selectTab(tabLayout.getTabAt(position));
             }
         });
-
-//
-//        movieAPIService = RetrofitManager.getInstance().getAPI();
-//        Call<ArrayList<MovieModel>> call = movieAPIService.getMovie();
-//        call.enqueue(new Callback<ArrayList<MovieModel>>() {
-//
-//            @Override
-//            public void onResponse(Call<ArrayList<MovieModel>> call, Response<ArrayList<MovieModel>> response) {
-//                String name = response.body().get(1).getName();
-//                Log.e("name",name);
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ArrayList<MovieModel>> call, Throwable t) {
-//                t.printStackTrace();
-//            }
-//        });
     }
 }

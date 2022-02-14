@@ -1,7 +1,8 @@
 package com.example.movieapiconnect;
 
+
 public class MovieModel {
-    private String about, name, engName, runTime, type, comeOutDate;
+    private String about, name, engName, runTime, type, comeOutDate, poster;
 
     public String getName() {
         return name;
@@ -25,5 +26,9 @@ public class MovieModel {
 
     public String getComeOutDate() {
         return comeOutDate;
+    }
+
+    public String getPoster() {
+        return poster;
     }
 }
