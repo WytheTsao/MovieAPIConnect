@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 
@@ -27,8 +28,8 @@ public class PageFragment extends Fragment {
     String url;
     RecycleViewAdapter recycleViewAdapter;
     RecyclerView recyclerView;
-    ProgressDialog progressDoalog;
     ArrayList<MovieModel> movieModelArrayList;
+    ProgressBar progressBar;
 
 
     public PageFragment(String url) {
@@ -40,8 +41,8 @@ public class PageFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         movieModelArrayList = new ArrayList<>();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        progressDoalog = new ProgressDialog(getContext());
-        progressDoalog.show();
+
+        progressBar.setVisibility(View.VISIBLE);
         movieAPIService = RetrofitManager.getInstance().getAPI();
         Call<ArrayList<MovieModel>> call = movieAPIService.getMovieInfoById(url);
         call.enqueue(new Callback<ArrayList<MovieModel>>() {
@@ -51,13 +52,13 @@ public class PageFragment extends Fragment {
                 movieModelArrayList = response.body();
                 recycleViewAdapter = new RecycleViewAdapter(movieModelArrayList);
                 recyclerView.setAdapter(recycleViewAdapter);
-                progressDoalog.dismiss();
+                progressBar.setVisibility(View.INVISIBLE);
             }
 
             @Override
             public void onFailure(Call<ArrayList<MovieModel>> call, Throwable t) {
                 t.printStackTrace();
-                progressDoalog.dismiss();
+                progressBar.setVisibility(View.INVISIBLE);
             }
         });
     }
@@ -69,6 +70,7 @@ public class PageFragment extends Fragment {
         inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.fragment_page, container, false);
         recyclerView = view.findViewById(R.id.movie_list_view);
+        progressBar = view.findViewById(R.id.progress_bar);
         return view;
     }
 }

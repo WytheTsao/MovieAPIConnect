@@ -2,7 +2,14 @@ package com.example.movieapiconnect;
 
 
 public class MovieModel {
-    private String about, name, engName, runTime, type, comeOutDate, poster;
+
+    private String about;
+    private String name;
+    private String engName;
+    private String runTime;
+    private String type;
+    private String comeOutDate;
+    private String poster;
 
     public String getName() {
         return name;
