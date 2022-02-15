@@ -1,6 +1,5 @@
 package com.example.movieapiconnect;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,7 +8,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +28,7 @@ public class PageFragment extends Fragment {
     RecyclerView recyclerView;
     ArrayList<MovieModel> movieModelArrayList;
     ProgressBar progressBar;
-
+    RetrofitManager retrofitManager;
 
     public PageFragment(String url) {
         this.url = url;
@@ -41,16 +39,15 @@ public class PageFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         movieModelArrayList = new ArrayList<>();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
         progressBar.setVisibility(View.VISIBLE);
-        movieAPIService = RetrofitManager.getInstance().getAPI();
+        retrofitManager = new RetrofitManager(getContext());
+        movieAPIService = retrofitManager.retrofitManager().create(MovieAPIService.class);
         Call<ArrayList<MovieModel>> call = movieAPIService.getMovieInfoById(url);
         call.enqueue(new Callback<ArrayList<MovieModel>>() {
-
             @Override
             public void onResponse(Call<ArrayList<MovieModel>> call, Response<ArrayList<MovieModel>> response) {
                 movieModelArrayList = response.body();
-                recycleViewAdapter = new RecycleViewAdapter(movieModelArrayList);
+                recycleViewAdapter = new RecycleViewAdapter(movieModelArrayList, recyclerView);
                 recyclerView.setAdapter(recycleViewAdapter);
                 progressBar.setVisibility(View.INVISIBLE);
             }

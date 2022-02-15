@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "701629492723",
+    "project_id": "movieapiconnect",
+    "storage_bucket": "movieapiconnect.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:701629492723:android:6bd3b759cf47e653dc7686",
+        "android_client_info": {
+          "package_name": "com.example.movieapiconnect"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "701629492723-n7ripld82uq7t0cvl9ju7umrqrlf2ek6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5m_nkyopxE68XuBBiXOzMBDmRQt_ez40"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "701629492723-n7ripld82uq7t0cvl9ju7umrqrlf2ek6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
