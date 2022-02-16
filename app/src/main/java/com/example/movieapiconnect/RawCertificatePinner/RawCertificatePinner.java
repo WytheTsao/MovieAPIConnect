@@ -2,9 +2,14 @@ package com.example.movieapiconnect.RawCertificatePinner;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RawRes;
+
+import com.example.movieapiconnect.MovieAPIService;
+import com.example.movieapiconnect.R;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,6 +26,8 @@ import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.X509TrustManager;
 
 import okhttp3.OkHttpClient;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RawCertificatePinner implements OkHttpCertificatePinner {
 
@@ -47,8 +54,10 @@ public class RawCertificatePinner implements OkHttpCertificatePinner {
         final SSLContext sslContext = getSSLContext(trustManagerFactory);
         X509TrustManager trustManager = getX509TrustManager(trustManagerFactory);
         okhttpBuilder.sslSocketFactory(sslContext.getSocketFactory(), trustManager);
+
         return okhttpBuilder;
     }
+
 
     private KeyStore getTrustedCertificate() {
         KeyStore trusted = null;
@@ -117,4 +126,6 @@ public class RawCertificatePinner implements OkHttpCertificatePinner {
 
         return (X509TrustManager) trustManagers[0];
     }
+
+
 }

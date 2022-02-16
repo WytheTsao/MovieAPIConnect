@@ -1,6 +1,8 @@
 package com.example.movieapiconnect;
 
 
+import java.util.List;
+
 public class MovieModel {
 
     private String about;
@@ -10,6 +12,7 @@ public class MovieModel {
     private String type;
     private String comeOutDate;
     private String poster;
+    private List<String> videos;
 
     public String getName() {
         return name;
@@ -37,5 +40,9 @@ public class MovieModel {
 
     public String getPoster() {
         return poster;
+    }
+
+    public List<String> getVideos() {
+        return videos;
     }
 }

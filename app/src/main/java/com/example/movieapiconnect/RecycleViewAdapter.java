@@ -25,7 +25,7 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
     public static final String BUNDLE_STRING_NAME = "name";
     public static final String BUNDLE_STRING_ABOUT = "about";
     public static final String BUNDLE_STRING_POSTER = "poster";
-
+    public static final String BUNDLE_LIST_VIDEO = "videolist";
     RecyclerView recyclerView;
 
 
@@ -75,11 +75,6 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
         holder.movieType.setText(movieModelList.get(position).getType());
         holder.movieComeOutDay.setText(movieModelList.get(position).getComeOutDate());
 
-//        if (movieModelList.get(position).getComeOutDate().isEmpty()) {
-//            holder.movieComeOutDay.setVisibility(View.INVISIBLE);
-//        } else {
-//            holder.movieComeOutDay.setText(movieModelList.get(position).getComeOutDate());
-//        }
 
         cardView.setOnLongClickListener(v -> {
             Intent intent = new Intent();
@@ -87,6 +82,7 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
             bundle.putString(BUNDLE_STRING_NAME, movieModelList.get(holder.getAdapterPosition()).getName());
             bundle.putString(BUNDLE_STRING_ABOUT, movieModelList.get(holder.getAdapterPosition()).getAbout());
             bundle.putString(BUNDLE_STRING_POSTER, movieModelList.get(holder.getAdapterPosition()).getPoster());
+            bundle.putStringArrayList(BUNDLE_LIST_VIDEO, (ArrayList<String>) movieModelList.get(holder.getAdapterPosition()).getVideos());
             intent.setClass(view.getContext(), MovieInfoActivity.class);
             intent.putExtras(bundle);
             view.getContext().startActivity(intent);

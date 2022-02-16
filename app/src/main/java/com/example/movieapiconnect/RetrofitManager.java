@@ -16,6 +16,7 @@ public class RetrofitManager {
     }
 
     public Retrofit retrofitManager() {
+
         RawCertificatePinner rawCertificatePinner = new RawCertificatePinner(context, R.raw.certificate, "mypassword");
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder = rawCertificatePinner.pinCertificate(builder);
