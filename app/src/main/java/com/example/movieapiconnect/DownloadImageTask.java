@@ -12,9 +12,9 @@ import android.widget.ProgressBar;
 import java.io.InputStream;
 
 public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-    ImageView bmImage;
-    int imageFlag;
-    ProgressBar progressBar;
+    private ImageView bmImage;
+    private int imageFlag;
+    private ProgressBar progressBar;
 
     public DownloadImageTask(ImageView bmImage, int imageFlag, ProgressBar progressBar) {
         this.bmImage = bmImage;

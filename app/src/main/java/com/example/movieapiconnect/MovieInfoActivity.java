@@ -30,16 +30,17 @@ import java.util.concurrent.Executors;
 
 public class MovieInfoActivity extends YouTubeBaseActivity {
 
-    TextView movieName, movieAbout;
-    ImageView imageView;
-    DownloadImageTask downloadImageTask;
-    ProgressBar progressBar;
-    YouTubePlayerView youTubePlayerView;
+    private TextView movieName, movieAbout;
+    private ImageView imageView;
+    private ProgressBar progressBar;
+    private YouTubePlayerView youTubePlayerView;
     public static final String BUNDLE_STRING_NAME = "name";
     public static final String BUNDLE_STRING_ABOUT = "about";
     public static final String BUNDLE_STRING_POSTER = "poster";
     public static final String BUNDLE_LIST_VIDEO = "videolist";
-    public static final String API_KEY = "AIzaSyBp486m8ULRpEvLV0T_8PZSSJo814Y9qGQ";
+    //    public static final String API_KEY = "AIzaSyBp486m8ULRpEvLV0T_8PZSSJo814Y9qGQ";
+    public static final String API_KEY = " ";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +48,8 @@ public class MovieInfoActivity extends YouTubeBaseActivity {
         setContentView(R.layout.activity_movie_info);
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(v -> MovieInfoActivity.super.onBackPressed());
-        movieName = findViewById(R.id.movie_name);
+//        movieName = findViewById(R.id.movie_name);
+        movieName = toolbar.findViewById(R.id.movie_name);
         movieAbout = findViewById(R.id.movie_about);
         imageView = findViewById(R.id.imageView);
         progressBar = findViewById(R.id.progress_bar);
@@ -55,8 +57,34 @@ public class MovieInfoActivity extends YouTubeBaseActivity {
         youTubePlayerView.initialize(API_KEY, youTubeListener);
         movieName.setText(getIntent().getStringExtra(BUNDLE_STRING_NAME));
         movieAbout.setText(getIntent().getStringExtra(BUNDLE_STRING_ABOUT));
-        downloadImageTask = (DownloadImageTask) new DownloadImageTask(imageView, 1, progressBar).execute(getIntent().getStringExtra(BUNDLE_STRING_POSTER));
+        new DownloadImageTask(imageView, 1, progressBar).execute(getIntent().getStringExtra(BUNDLE_STRING_POSTER));
     }
+
+
+    public String replaceURL(String url) {
+        return url.replace("https://www.youtube.com/embed/", "");
+    }
+
+    public YouTubePlayer.OnInitializedListener youTubeListener = new YouTubePlayer.OnInitializedListener() {
+        @Override
+        public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
+            final ArrayList<String> youTubeList;
+            final String youTubeCode;
+            youTubeList = getIntent().getStringArrayListExtra(BUNDLE_LIST_VIDEO);
+            youTubeCode = replaceURL(youTubeList.get(0));
+            if (!b) {
+                if (youTubeCode != null) {
+                    youTubePlayer.loadVideo(youTubeCode);
+                    youTubePlayer.play();
+                }
+            }
+        }
+
+        @Override
+        public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
+
+        }
+    };
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -67,26 +95,5 @@ public class MovieInfoActivity extends YouTubeBaseActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-    public String replaceURL(String url) {
-        return url.replace("https://www.youtube.com/embed/", "");
-    }
-
-    public YouTubePlayer.OnInitializedListener youTubeListener = new YouTubePlayer.OnInitializedListener() {
-        @Override
-        public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
-            if (!b) {
-                ArrayList<String> youTubeList;
-                youTubeList = getIntent().getStringArrayListExtra(BUNDLE_LIST_VIDEO);
-                youTubePlayer.loadVideo(replaceURL(youTubeList.get(0)));
-                youTubePlayer.play();
-            }
-        }
-
-        @Override
-        public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
-
-        }
-    };
 
 }

@@ -21,9 +21,6 @@ public class CustomerScrollListener extends RecyclerView.OnScrollListener {
         super.onScrollStateChanged(recyclerView, newState);
         if (newState == RecyclerView.SCROLL_STATE_IDLE) {
 
-
-//            downloadImageTask.cancel(true);
-//            downloadImageTask.execute(url);
         }
     }
 

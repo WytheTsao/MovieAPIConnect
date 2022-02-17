@@ -17,7 +17,6 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    MovieAPIService movieAPIService;
     public TabLayout tabLayout;
     public ViewPager2 viewPager2;
     public FragmentAdapter fragmentAdapter;
@@ -34,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         viewPager2.setAdapter(fragmentAdapter);
         tabLayout.addTab(tabLayout.newTab().setText(R.string.hot_movie));
         tabLayout.addTab(tabLayout.newTab().setText(R.string.comming_movie));
+
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {

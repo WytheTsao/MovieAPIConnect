@@ -23,13 +23,13 @@ import retrofit2.Response;
 
 public class PageFragment extends Fragment {
 
-    MovieAPIService movieAPIService;
-    String url;
-    RecycleViewAdapter recycleViewAdapter;
-    RecyclerView recyclerView;
-    ArrayList<MovieModel> movieModelArrayList;
-    ProgressBar progressBar;
-    RetrofitManager retrofitManager;
+    private MovieAPIService movieAPIService;
+    private String url;
+    private RecycleViewAdapter recycleViewAdapter;
+    private RecyclerView recyclerView;
+    private ArrayList<MovieModel> movieModelArrayList;
+    private ProgressBar progressBar;
+    private RetrofitManager retrofitManager;
 
     public PageFragment(String url) {
         this.url = url;
@@ -44,21 +44,8 @@ public class PageFragment extends Fragment {
         retrofitManager = new RetrofitManager(getContext());
         movieAPIService = retrofitManager.retrofitManager().create(MovieAPIService.class);
         Call<ArrayList<MovieModel>> call = movieAPIService.getMovieInfoById(url);
-        call.enqueue(new Callback<ArrayList<MovieModel>>() {
-            @Override
-            public void onResponse(Call<ArrayList<MovieModel>> call, Response<ArrayList<MovieModel>> response) {
-                movieModelArrayList = response.body();
-                recycleViewAdapter = new RecycleViewAdapter(movieModelArrayList, recyclerView);
-                recyclerView.setAdapter(recycleViewAdapter);
-                progressBar.setVisibility(View.INVISIBLE);
-            }
+        call.enqueue(callback);
 
-            @Override
-            public void onFailure(Call<ArrayList<MovieModel>> call, Throwable t) {
-                t.printStackTrace();
-                progressBar.setVisibility(View.INVISIBLE);
-            }
-        });
     }
 
 
@@ -71,4 +58,19 @@ public class PageFragment extends Fragment {
         progressBar = view.findViewById(R.id.progress_bar);
         return view;
     }
+
+    private Callback<ArrayList<MovieModel>> callback = new Callback<ArrayList<MovieModel>>() {
+        @Override
+        public void onResponse(Call<ArrayList<MovieModel>> call, Response<ArrayList<MovieModel>> response) {
+            movieModelArrayList = response.body();
+            recycleViewAdapter = new RecycleViewAdapter(movieModelArrayList, recyclerView);
+            recyclerView.setAdapter(recycleViewAdapter);
+            progressBar.setVisibility(View.INVISIBLE);
+        }
+
+        @Override
+        public void onFailure(Call<ArrayList<MovieModel>> call, Throwable t) {
+            t.printStackTrace();
+        }
+    };
 }

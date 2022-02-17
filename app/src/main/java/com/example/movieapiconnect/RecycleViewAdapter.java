@@ -21,12 +21,13 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
     private CardView cardView;
     private ArrayList<MovieModel> movieModelList;
     private View view;
-    DownloadImageTask downloadImageTask;
     public static final String BUNDLE_STRING_NAME = "name";
     public static final String BUNDLE_STRING_ABOUT = "about";
     public static final String BUNDLE_STRING_POSTER = "poster";
     public static final String BUNDLE_LIST_VIDEO = "videolist";
-    RecyclerView recyclerView;
+    private RecyclerView recyclerView;
+    private boolean scrolling = true;
+    private DownloadImageTask downloadImageTask;
 
 
     public RecycleViewAdapter(ArrayList<MovieModel> movieModelList, RecyclerView recyclerView) {
@@ -46,7 +47,6 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
             moviePoster = itemView.findViewById(R.id.movie_poster);
             movieName = itemView.findViewById(R.id.movie_name);
             progressBar = itemView.findViewById(R.id.progress_bar);
-
             movieEngName = itemView.findViewById(R.id.movie_eng_name);
             movieType = itemView.findViewById(R.id.movie_type);
             movieComeOutDay = itemView.findViewById(R.id.movie_come_out_day);
@@ -66,16 +66,13 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
     @Override
     public void onBindViewHolder(@NonNull Viewholder holder, int position) {
         holder.movieName.setText(movieModelList.get(position).getName());
+//        new DownloadImageTask(holder.moviePoster, 0, holder.progressBar).execute(movieModelList.get(position).getPoster());
         downloadImageTask = (DownloadImageTask) new DownloadImageTask(holder.moviePoster, 0, holder.progressBar).execute(movieModelList.get(position).getPoster());
-        recyclerView.addOnScrollListener(new CustomerScrollListener(downloadImageTask, movieModelList.get(position).getPoster()));
-
 
         holder.movieEngName.setText(movieModelList.get(position).getEngName());
         holder.movieRunTime.setText(movieModelList.get(position).getRunTime());
         holder.movieType.setText(movieModelList.get(position).getType());
         holder.movieComeOutDay.setText(movieModelList.get(position).getComeOutDate());
-
-
         cardView.setOnLongClickListener(v -> {
             Intent intent = new Intent();
             Bundle bundle = new Bundle();
@@ -94,6 +91,5 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
     public int getItemCount() {
         return (movieModelList == null) ? 0 : movieModelList.size();
     }
-
 
 }

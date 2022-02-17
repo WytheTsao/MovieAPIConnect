@@ -47,6 +47,7 @@ public class RawCertificatePinner implements OkHttpCertificatePinner {
         this.certificatePassword = certificatePassword;
     }
 
+
     @Override
     public OkHttpClient.Builder pinCertificate(OkHttpClient.Builder okhttpBuilder) {
         final KeyStore trustedCertificate = getTrustedCertificate();
